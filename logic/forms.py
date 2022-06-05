@@ -6,14 +6,17 @@ from .models import Profile
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(
-	    required=True, widget=forms.EmailInput(attrs={'class': 'my-3'}))
+	    required=True, widget=forms.EmailInput(attrs={'class': 'my-3 input-val'}))
 
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
     def __init__(self, *args, **kwargs):
         super(NewUserForm, self).__init__(*args,**kwargs)
-        self.fields['password2'].widget.attrs['class'] ='my-3'
+        self.fields['password2'].widget.attrs['class'] ='my-3 input-val'
+        self.fields['username'].widget.attrs['class'] ='input-val'
+        self.fields['password1'].widget.attrs['class'] ='input-val'
+        
 
         
     def save(self, commit=True):
