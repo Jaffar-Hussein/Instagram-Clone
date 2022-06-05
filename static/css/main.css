@@ -2,7 +2,20 @@
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 
 }
-
+label{
+    display: none !important;
+}
 .insta{
     font-family: 'Billabong', sans-serif;
+}
+
+
+body{
+    background-color: rgba(251, 250, 250)!important;
+}
+.login{
+    max-height:100vh !important;
+}
+.input-val{
+    border-radius: 0 !important;
 }

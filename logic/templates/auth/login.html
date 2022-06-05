@@ -1,19 +1,37 @@
 {% extends 'layout.html' %}
 {% block content %}
+{%load static%}
+<div class="container login">
+    <div class="row  d-flex justify-content-center align-items-center" style="height:100vh">
+        <div class="col-md-6  d-flex justify-content-center align-items-center">
+            <img src="{% static "phone.svg" %}" class="img-fluid h-100"alt="">
+        </div>
+        <div class="col-md-4">
+            <div class="container bg-white border m-2 px-3 py-5">
+                <div class="container d-flex justify-content-center align-items-center">
+                    <img src="{% static "insta.png" %}" class="img-fluid w-25" alt="">
+                </div>
+                    <!-- <p class="insta h1 text-center" >Instagram</p> -->
+                    
+                
+                <form action="" method="post">
+                    {%csrf_token%}
+                   <div class="container text-center d-flex flex-column justify-content-center align-items-center">
+                    
+                        {{form}}
+                    
+                    <input type="submit" class="btn btn-primary w-75 mt-2 " value="Submit">
+                   </div>
+                    
+                </form>
+            </div>
+       
+            <div class="container bg-white p-3 m-2 border ">
+            <p class="text-center">Create a new account, <a href="{%url 'register'%}">Register</a> instead.</p>
 
-<div class="row  d-flex justify-content-center align-items-center" style="height:100vh">
-    <div class="col-md-6">
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <form action="" method="post">
-            {%csrf_token%}
-            <table>
-                {{form}}
-            </table>
-            <input type="submit" value="Submit">
-        </form>
-        <p class="text-center">Create a new account, <a href="{%url 'register'%}">Register</a> instead.</p>
-    </div>
+    
 </div>
-
 {% endblock content %}
