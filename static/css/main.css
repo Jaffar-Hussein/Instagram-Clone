@@ -1,10 +1,13 @@
 .register{
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 label{
     display: none !important;
 }
+/* .register-logo{
+    height: 100vh;
+} */
+
 .insta{
     font-family: 'Billabong', sans-serif;
 }
