@@ -5,17 +5,22 @@
    
    
     <div class=" ">
-        <div class="d-flex justify-content-center align-content-center ">
+        <div class="d-flex justify-content-center align-items-center my-5 register-logo">
           <div class="register p-4">
               <strong>
-                  <p class="insta h1 text-center" >Instagram</p>
+                  <p class="insta h1 text-center my-2" >Instagram</p>
               </strong>
+              <b><p class="text-center text-muted">Sign up to see photos <br> and videos from your friends.</p>
+              </b>
             <form method='post' >
                 {%csrf_token%}
                 {% bootstrap_form register_form layout='inline' %}
-                <button class="btn btn-primary" type="submit">Register</button>
+                <p class="text-center text-muted fs-6">People who use our service may have uploaded <br>
+                    your contact information to Instagram. <b>Learn <br> more</b></p>
+   
+                <button class="btn btn-primary form-control my-3" type="submit">Register</button>
             </form>
-          </div>
+                    </div>
             
         </div>
     </div>

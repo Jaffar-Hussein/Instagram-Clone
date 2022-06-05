@@ -5,19 +5,24 @@ from .models import Profile
 
 
 class NewUserForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(
+	    required=True, widget=forms.EmailInput(attrs={'class': 'my-3'}))
 
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
+    def __init__(self, *args, **kwargs):
+        super(NewUserForm, self).__init__(*args,**kwargs)
+        self.fields['password2'].widget.attrs['class'] ='my-3'
 
+        
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
         return user
-
+    
 
 class LoginForm(forms.ModelForm):
     username = forms.CharField(max_length=80)
