@@ -6,7 +6,7 @@ from cloudinary.models import CloudinaryField
 class Profile(models.Model):
     username = models.CharField(max_length=50)
     email = models.EmailField()
-    password = models.CharField()
+    password = models.CharField(max_length=50)
     profilephoto = CloudinaryField("profilephoto")
     bio = models.TextField()
 
@@ -29,9 +29,10 @@ class Profile(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=40, null=False)
     image = CloudinaryField("image")
-    profile = models.ForeignKey(Profile)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.IntegerField()
     comments = models.TextField()
+    pub_date = models.DateField(auto_now_add=True)
     caption = models.CharField(max_length=80, null=False)
 
     def __str__(self):
