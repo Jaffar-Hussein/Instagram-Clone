@@ -11,6 +11,10 @@ class Profile(models.Model):
     bio = models.TextField()
 
     def __str__(self):
+        return f"Profile: {self.username} : email: {self.email} : profile: {self.profilephoto} : category: {self.bio}"
+
+
+    def __str__(self):
         return self.username
 
     @classmethod
