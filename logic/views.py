@@ -9,8 +9,12 @@ from .models import Image, Profile
 
 @login_required
 def home(request):
-    posts = Image.objects.all()
-    return render(request, 'home.html', {"posts": posts})
+    posts=Image.objects.all()
+    return render(request, 'home.html',{"posts": posts})
+@login_required
+def explore(request):
+    posts=Image.objects.all()
+    return render(request, 'explore.html', {"posts": posts})
 
 
 def register_request(request):

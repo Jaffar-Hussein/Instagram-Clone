@@ -36,7 +36,7 @@ class Image(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.IntegerField()
     comments = models.TextField()
-    pub_date = models.DateField(auto_now_add=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
     caption = models.CharField(max_length=80, null=False)
 
     def __str__(self):
