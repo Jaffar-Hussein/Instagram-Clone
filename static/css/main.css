@@ -4,9 +4,9 @@
 label{
     display: none !important;
 }
-/* .register-logo{
-    height: 100vh;
-} */
+.reg{
+    height: 100vh !important;
+}
 
 .insta{
     font-family: 'Billabong', sans-serif;
@@ -21,4 +21,23 @@ body{
 }
 .input-val{
     border-radius: 0 !important;
+}
+.nav-sc {
+    flex: 1 1 0!important;
+}
+.img{
+    border-radius: 50% !important;
+    background-image: url(/static/han.png);
+    height:24px !important;
+    width:24px !important;
+
+}
+.dropdown-toggle::after{
+    display:none !important;
+}
+.icons-nav{
+    width:20vw !important;
+    display:flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
 }
