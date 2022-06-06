@@ -93,3 +93,7 @@ body {
 .cont {
     min-height: 100vh !important;
 }
+.heart{
+    margin-right: 0.8rem;
+}
+
