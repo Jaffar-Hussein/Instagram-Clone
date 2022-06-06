@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import NewUserForm, LoginForm, ImageForm
+from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
 # Create your views here.
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -9,8 +9,8 @@ from .models import Image, Profile
 
 @login_required
 def home(request):
-    posts=Image.objects.all()
-    return render(request, 'home.html',{"posts": posts})
+    posts = Image.objects.all()
+    return render(request, 'home.html', {"posts": posts})
 
 
 def register_request(request):
@@ -83,12 +83,23 @@ def logout_request(request):
 @login_required
 def profile(request):
     current_user = request.user
-    print(current_user.bio)
+    user_profile = Profile.objects.all().filter(
+        username=current_user.username).first()
     context = {
-        "bio" : current_user.bio
+        "user_details": user_profile
     }
     return render(request, 'profile.html', context=context)
 
+
 @login_required
 def profile_edit(request):
-    pass
+    form = ProfileEditForm()
+    current_user = request.user
+    user_profile = Profile.objects.all().filter(
+        username=current_user.username).first()
+    context = {
+        "user_details": user_profile,
+        "form": form
+    }
+
+    return render(request, 'profile_edit.html',context=context)
