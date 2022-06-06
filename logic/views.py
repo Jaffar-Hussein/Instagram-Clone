@@ -9,7 +9,8 @@ from .models import Image, Profile
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    posts=Image.objects.all()
+    return render(request, 'home.html',{"posts": posts})
 
 
 def register_request(request):

@@ -2,9 +2,26 @@
 {% load bootstrap5 %}
 {% block content %}
 {% include "nav.html" %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+<div class="container">
+    <div class="row mx-5 my-5">
+     {% for post in posts %}
+     <div class="col-md-6 ml-4">
+        <div class="card" >
+            <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">
+                  <p><b><span class="mr-2">{{post.profile.username}}</span></b> {{post.caption}}</p>
+                </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+          
+    </div>
+     {% endfor %}
+        <div class="col-md-6 mr-4">
+            <p>Hanan Hussein</p>
+        </div>
+    </div>
+</div>
 {% endblock content %}
