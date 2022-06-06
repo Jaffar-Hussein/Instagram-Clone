@@ -1,43 +1,62 @@
-.register{
+.register {
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
-label{
+
+label {
     display: none !important;
 }
-.reg{
+
+.reg {
     height: 100vh !important;
 }
 
-.insta{
+.insta {
     font-family: 'Billabong', sans-serif;
 }
 
+body {
+    background-color: rgba(251, 250, 250) !important;
+}
 
-body{
-    background-color: rgba(251, 250, 250)!important;
+.login {
+    max-height: 100vh !important;
 }
-.login{
-    max-height:100vh !important;
-}
-.input-val{
+
+.input-val {
     border-radius: 0 !important;
 }
+
 .nav-sc {
-    flex: 1 1 0!important;
+    flex: 1 1 0 !important;
 }
-.img{
+
+.img {
     border-radius: 50% !important;
     background-image: url(/static/han.png);
-    height:24px !important;
-    width:24px !important;
+    height: 24px !important;
+    width: 24px !important;
+}
 
+.dropdown-toggle::after {
+    display: none !important;
 }
-.dropdown-toggle::after{
-    display:none !important;
-}
-.icons-nav{
-    width:20vw !important;
-    display:flex !important;
+
+.icons-nav {
+    width: 20vw !important;
+    display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+}
+
+.form-control,
+.form-control:focus,
+.form-control:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn:focus,
+.btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
