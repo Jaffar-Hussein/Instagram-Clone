@@ -2,7 +2,7 @@
 <div class="container-fluid">
    <div class="container-fluid  d-flex justify-content-around align-items-center nav-sc">
    <div>
-    <a class="navbar-brand insta fs-3" href="#">HJ Instagram</a>
+    <a class="navbar-brand insta fs-3" href="{%url "home" %}">HJ Instagram</a>
    </div>
         <form action="">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -37,12 +37,13 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <div class="img">
+                  <div class="bit-img">
+                      <img src="/static/han.png" alt="" class="img-resp">
                   </div>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
-                  <li><a class="dropdown-item" href="#">Log out</a></li>
+                  <li><a class="dropdown-item" href="{%url "profile" %}">Profile</a></li>
+                  <li><a class="dropdown-item" href="{%url "logout" %}">Log out</a></li>
                 </ul>
               </li>
         </ul>

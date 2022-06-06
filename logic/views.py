@@ -71,3 +71,12 @@ def image_upload(request):
 
 	
     return render(request, 'upload.html',context=context)
+
+def logout(request):
+    return render(request, '')
+
+def profile(request):
+    context = {
+        
+    }
+    return render(request, 'profile.html', context=context)
