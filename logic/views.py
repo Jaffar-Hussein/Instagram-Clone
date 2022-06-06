@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import NewUserForm,LoginForm
+from .forms import NewUserForm,LoginForm, ImageForm
 # Create your views here.
 from django.contrib.auth import login,authenticate
 from django.contrib import messages
 
 
 def home(request):
-    return render(request, 'layout.html')
+    return render(request, 'home.html')
 
 
 def register_request(request):
@@ -44,3 +44,26 @@ def login_request(request):
 		"form": form,
 	}
 	return render(request, 'auth/login.html', context=context)
+
+def image_upload(request):
+	context = {
+		"form":form
+	}
+	form=ImageForm()
+
+	if request.method == 'POST':
+		form=ImageForm(request.POST,request.FILES)
+		if form.is_valid():
+			name= form.cleaned_data['name']
+			image= form.cleaned_data['image']
+			caption= form.cleaned_data['caption']
+			form=ImageForm(name=name,image=image,caption=caption)
+			form.save()
+			print(form)
+
+			messages.success(request, "Post created successful")
+	
+	
+
+	
+	return render(request, 'home.html',context=context)

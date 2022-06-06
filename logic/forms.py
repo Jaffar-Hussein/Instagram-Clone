@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Image  
 
 
 class NewUserForm(UserCreationForm):
@@ -39,3 +39,12 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('username', 'password')
+
+class ImageForm(forms.ModelForm):
+    name = forms.CharField(max_length=40)
+    image = forms.ImageField()
+    caption = forms.CharField(max_length=80)
+
+    class Meta:
+        model = Image
+        fields = ('name', 'image', 'caption')
