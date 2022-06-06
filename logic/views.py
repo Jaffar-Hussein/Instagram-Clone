@@ -16,7 +16,6 @@ def register_request(request):
 		if form.is_valid():
 			username= form.cleaned_data['username']
 			email= form.cleaned_data['email']
-			caption= form.cleaned_data['caption']
 			user = form.save()
 			profile=Profile(username=username, email=email)
 			profile.save()
@@ -50,24 +49,25 @@ def login_request(request):
 
 def image_upload(request):
 
-	if request.method == 'POST':
-		form=ImageForm(request.POST,request.FILES)
-		if form.is_valid():
-			name= form.cleaned_data['name']
-			image= form.cleaned_data['image']
-			caption= form.cleaned_data['caption']
-			likes=0
-			profile=request.profile.id
-			form=Image(name=name,image=image,caption=caption,likes=likes,profile=profile)
-			form.save()
-			print(form)
+    if request.method == 'POST':
+        form=ImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            name= form.cleaned_data['name']
+            image= form.cleaned_data['image']
+            caption= form.cleaned_data['caption']
+            likes=0
+            profile=Profile.objects.all().filter(username=request.user.username).first()
+            print(profile)
+            form=Image(name=name,image=image,caption=caption,likes=likes,profile=profile)
+            form.save()
+            print(form)
 
-			messages.success(request, "Post created successful")
-	form=ImageForm()
+            messages.success(request, "Post created successful")
+    form=ImageForm()
 
-	context = {
+    context = {
 		"form":form
 	}
 
 	
-	return render(request, 'upload.html',context=context)
+    return render(request, 'upload.html',context=context)
