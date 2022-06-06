@@ -36,8 +36,6 @@ def login_request(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-
-            messages.success(request, "Successfully logged in")
             return redirect('home')
         else:
             messages.error(request, "Invalid username or password")
@@ -83,7 +81,13 @@ def logout_request(request):
 
 @login_required
 def profile(request):
+    current_user = request.user
+    print(current_user.bio)
     context = {
-
+        "bio" : current_user.bio
     }
     return render(request, 'profile.html', context=context)
+
+@login_required
+def profile_edit(request):
+    pass
