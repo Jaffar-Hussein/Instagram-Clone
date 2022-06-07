@@ -63,7 +63,7 @@ def image_upload(request):
             name = form.cleaned_data['name']
             image = form.cleaned_data['image']
             caption = form.cleaned_data['caption']
-            profile = Profile.objects.all().filter(username=request.user.username).first()
+            profile = Profile.objects.all().filter(id=request.user.id).first()
             profile.save()
             print(profile)
             form = Image(name=name, image=image, caption=caption,
@@ -105,12 +105,14 @@ def profile_edit(request):
             email = form.cleaned_data['email']
             bio = form.cleaned_data['bio']
             profilephoto = form.cleaned_data['profilephoto']
-            print(type(profilephoto))
             
+            profile=Profile.objects.get(id=request.user.id)
             
+            Profile.objects.filter(id=request.user.id).update(bio=bio)
             
-            Profile.objects.filter(id=request.user.id).update(bio=bio,profilephoto=profilephoto)
-            
+            profile.profilephoto=profilephoto
+
+            profile.save()
             User.objects.filter(id=request.user.id).update(
                 email=email, username=username)
             return redirect('profile')
