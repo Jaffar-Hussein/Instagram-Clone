@@ -5,9 +5,9 @@
 {% block content %}
 {% include "nav.html" %}
 <div class="container">
-    <div class="row mx-5 my-5">
+    <div class="row mx-5  d-flex justify-content-center">
 
-     <div class="col-md-6 ">
+     <div class="col-md-5 scroll scroll-h pt-3">
        <div class="d-flex flex-column">
         {% for post in posts %}
 
@@ -36,7 +36,7 @@
           
     </div>
     
-        <div class="col-md-6 my-4">
+        <div class="col-md-4 mt-5 pt-5">
                <div class="d-flex">
                 <div class="bit-img2 mx-3">
                     <img src="/static/han.png" alt="" class="img-resp">
@@ -81,5 +81,6 @@
 
         </div>
     </div>
+</div>
 </div>
 {% endblock content %}

@@ -2,7 +2,7 @@ from dataclasses import field
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Image  
+from .models import Profile, Image
 
 
 class NewUserForm(UserCreationForm):
@@ -12,21 +12,20 @@ class NewUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-    def __init__(self, *args, **kwargs):
-        super(NewUserForm, self).__init__(*args,**kwargs)
-        self.fields['password2'].widget.attrs['class'] ='my-3 input-val'
-        self.fields['username'].widget.attrs['class'] ='input-val'
-        self.fields['password1'].widget.attrs['class'] ='input-val'
-        
 
-        
+    def __init__(self, *args, **kwargs):
+        super(NewUserForm, self).__init__(*args, **kwargs)
+        self.fields['password2'].widget.attrs['class'] = 'my-3 input-val'
+        self.fields['username'].widget.attrs['class'] = 'input-val'
+        self.fields['password1'].widget.attrs['class'] = 'input-val'
+
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
         return user
-    
+
 
 class LoginForm(forms.ModelForm):
     username = forms.CharField(max_length=80)
@@ -41,6 +40,7 @@ class LoginForm(forms.ModelForm):
         model = Profile
         fields = ('username', 'password')
 
+
 class ImageForm(forms.ModelForm):
     name = forms.CharField(max_length=40)
     image = forms.ImageField()
@@ -49,6 +49,12 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ('name', 'image', 'caption')
+    name.widget.attrs.update(
+        {'class': 'form-control m-2 w-100 input-val', 'placeholder': 'Enter Image name'})
+    caption.widget.attrs.update(
+        {'class': 'form-control m-2  input-val', 'placeholder': 'Enter the caption'})
+    image.widget.attrs.update(
+        {'class': 'form-control m-2  input-val', 'placeholder': 'Enter Image'})
         
 class ProfileEditForm(forms.ModelForm):
     username = forms.CharField(max_length=50)

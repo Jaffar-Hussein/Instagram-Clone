@@ -16,7 +16,7 @@ def home(request):
     followed = [i for i in User.objects.all() if Followers.objects.filter(
         followers=request.user, followed=i)]
     print(followed)
-
+    
     return render(request, 'home.html', {"posts": posts, "username": username, "users": users, "followed": followed},)
 
 
@@ -72,6 +72,7 @@ def image_upload(request):
                          profile=profile)
             form.save()
             messages.success(request, "Post created successful")
+            return redirect('home')
     form = ImageForm()
 
     context = {
@@ -88,9 +89,12 @@ def logout_request(request):
 @login_required
 def profile(request):
     current_user = request.user
-
+    posts = Image.objects.all().filter(profile__id=request.user.id)
+    number = len(posts)
     context = {
-        "user_details": current_user.profile
+        "user_details": current_user.profile,
+        "posts": posts,
+        "number": number
     }
     return render(request, 'profile.html', context=context)
 

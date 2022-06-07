@@ -2,6 +2,24 @@
     width: 100vw !important;
     height: 100vh !important;
     overflow-y: hidden !important;
+    position: fixed !important;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.scroll {
+    overflow-y: scroll !important;
+    height: 85vh !important;
+}
+
+.upload-height {
+    height: 80vh !important;
 }
 
 .register {
