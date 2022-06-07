@@ -10,13 +10,16 @@ from django.contrib.auth.models import User
 
 @login_required
 def home(request):
-    posts=Image.objects.all()
-    username=request.user.username
-    users= User.objects.all()
-    followed = [i for i in User.objects.all() if Followers.objects.filter(followers = request.user, followed=i)]
+    posts = Image.objects.all()
+    username = request.user.username
+    users = User.objects.all()
+    followed = [i for i in User.objects.all() if Followers.objects.filter(
+        followers=request.user, followed=i)]
     print(followed)
 
-    return render(request, 'home.html',{"posts": posts,"username": username,"users": users,"followed":followed},)
+    return render(request, 'home.html', {"posts": posts, "username": username, "users": users, "followed": followed},)
+
+
 @login_required
 def explore(request):
     posts = Image.objects.all()
@@ -56,7 +59,6 @@ def login_request(request):
 
 @login_required
 def image_upload(request):
-
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -69,15 +71,12 @@ def image_upload(request):
             form = Image(name=name, image=image, caption=caption,
                          profile=profile)
             form.save()
-            print(form)
-
             messages.success(request, "Post created successful")
     form = ImageForm()
 
     context = {
         "form": form
     }
-
     return render(request, 'upload.html', context=context)
 
 
@@ -89,7 +88,7 @@ def logout_request(request):
 @login_required
 def profile(request):
     current_user = request.user
-    
+
     context = {
         "user_details": current_user.profile
     }
@@ -105,18 +104,13 @@ def profile_edit(request):
             email = form.cleaned_data['email']
             bio = form.cleaned_data['bio']
             profilephoto = form.cleaned_data['profilephoto']
-            
-            profile=Profile.objects.get(id=request.user.id)
-            
-            Profile.objects.filter(id=request.user.id).update(bio=bio)
-            
-            profile.profilephoto=profilephoto
-
+            profile = Profile.objects.get(id=request.user.id)
+            profile.profilephoto = profilephoto
+            profile.bio = bio
             profile.save()
             User.objects.filter(id=request.user.id).update(
                 email=email, username=username)
             return redirect('profile')
-
     current_user = request.user
     user_profile = Profile.objects.all().filter(
         user=current_user).first()
@@ -125,7 +119,6 @@ def profile_edit(request):
         "user_details": user_profile,
         "form": form
     }
-
     return render(request, 'profile_edit.html', context=context)
 
 
@@ -134,7 +127,8 @@ def followers(request, user_id):
     current_user = request.user.id
     current_user = User.objects.get(id=current_user)
     other_user = User.objects.get(id=user_id)
-    followers=Followers.objects.filter(followers=current_user,followed=other_user)
+    followers = Followers.objects.filter(
+        followers=current_user, followed=other_user)
 
     if followers:
         followers.delete()

@@ -1,21 +1,11 @@
 {% extends 'profile.html' %}
 {% load bootstrap5 %}
-{% load cloudinary %}
 {% block edit_display %}
-<form method="POST" enctype="multipart/form-data" >
+<form method="POST" enctype="multipart/form-data">
     {%csrf_token%}
-
-    
-    <div class="w-100 d-flex flex-column justify-content-center">
+    <div class=" d-flex flex-column justify-content-center align-items-center">
         {{form }}
         <input type="submit" class="btn btn-primary w-75 mt-2 " value="Submit">
-
     </div>
-
-
-
-    
-
-
 </form>
 {% endblock %}

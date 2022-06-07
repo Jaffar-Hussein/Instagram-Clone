@@ -66,6 +66,6 @@ class ProfileEditForm(forms.ModelForm):
     profilephoto.widget.attrs.update(
         {'class': 'form-control m-2  input-val', 'placeholder': 'Profile Photo'})
     bio.widget.attrs.update(
-        {'class': 'form-control m-2  input-val', 'placeholder': 'Enter bio'})
+        {'class': 'form-control m-2  input-val', 'placeholder': 'Enter bio','rows':4, 'cols':40})
     
     

@@ -1,3 +1,9 @@
+.full-page {
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-y: hidden !important;
+}
+
 .register {
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
@@ -39,6 +45,7 @@ body {
     position: relative;
     width: 2rem;
 }
+
 .bit-img2 {
     border-radius: 50%;
     box-sizing: border-box;
@@ -48,6 +55,7 @@ body {
     position: relative;
     width: 7rem;
 }
+
 .img-div {
     border-radius: 50%;
     box-sizing: border-box;
@@ -101,7 +109,7 @@ body {
 .cont {
     min-height: 100vh !important;
 }
-.heart{
+
+.heart {
     margin-right: 0.8rem;
 }
-
