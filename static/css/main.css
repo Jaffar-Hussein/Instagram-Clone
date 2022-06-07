@@ -39,7 +39,15 @@ body {
     position: relative;
     width: 2rem;
 }
-
+.bit-img2 {
+    border-radius: 50%;
+    box-sizing: border-box;
+    height: 7rem;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: 7rem;
+}
 .img-div {
     border-radius: 50%;
     box-sizing: border-box;
