@@ -1,7 +1,8 @@
 {% extends 'profile.html' %}
 {% load bootstrap5 %}
+{% load cloudinary %}
 {% block edit_display %}
-<form method="post" enctype="multipart/form-data" >
+<form method="POST" enctype="multipart/form-data" >
     {%csrf_token%}
 
     

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'logic',
     'bootstrap5',
+    'cloudinary',
     "django_htmx",
 
 ]

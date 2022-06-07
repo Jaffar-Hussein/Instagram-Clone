@@ -10,12 +10,13 @@ from django.contrib.auth.models import User
 
 @login_required
 def home(request):
-    posts = Image.objects.all()
-    username = request.user.username
-    users = User.objects.all()
-    return render(request, 'home.html', {"posts": posts, "username": username, "users": users})
+    posts=Image.objects.all()
+    username=request.user.username
+    users= User.objects.all()
+    followed = [i for i in User.objects.all() if Followers.objects.filter(followers = request.user, followed=i)]
+    print(followed)
 
-
+    return render(request, 'home.html',{"posts": posts,"username": username,"users": users,"followed":followed},)
 @login_required
 def explore(request):
     posts = Image.objects.all()
@@ -62,7 +63,7 @@ def image_upload(request):
             name = form.cleaned_data['name']
             image = form.cleaned_data['image']
             caption = form.cleaned_data['caption']
-            profile = Profile.objects.all().filter(username=request.user.username).first()
+            profile = Profile.objects.all().filter(id=request.user.id).first()
             profile.save()
             print(profile)
             form = Image(name=name, image=image, caption=caption,
@@ -104,12 +105,14 @@ def profile_edit(request):
             email = form.cleaned_data['email']
             bio = form.cleaned_data['bio']
             profilephoto = form.cleaned_data['profilephoto']
-            print(type(profilephoto))
             
+            profile=Profile.objects.get(id=request.user.id)
             
+            Profile.objects.filter(id=request.user.id).update(bio=bio)
             
-            Profile.objects.filter(id=request.user.id).update(bio=bio,profilephoto=profilephoto)
-            
+            profile.profilephoto=profilephoto
+
+            profile.save()
             User.objects.filter(id=request.user.id).update(
                 email=email, username=username)
             return redirect('profile')
@@ -131,8 +134,8 @@ def followers(request, user_id):
     current_user = request.user.id
     current_user = User.objects.get(id=current_user)
     other_user = User.objects.get(id=user_id)
-    followers = Followers.objects.filter(
-        followers=current_user, followed=other_user)
+    followers=Followers.objects.filter(followers=current_user,followed=other_user)
+
     if followers:
         followers.delete()
     else:
