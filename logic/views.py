@@ -8,13 +8,14 @@ from .models import Image, Profile, Followers
 from django.contrib.auth.models import User
 
 
-
 @login_required
 def home(request):
-    posts=Image.objects.all()
-    username=request.user.username
-    users= User.objects.all()
-    return render(request, 'home.html',{"posts": posts,"username": username,"users": users})
+    posts = Image.objects.all()
+    username = request.user.username
+    users = User.objects.all()
+    return render(request, 'home.html', {"posts": posts, "username": username, "users": users})
+
+
 @login_required
 def explore(request):
     posts = Image.objects.all()
@@ -87,10 +88,7 @@ def logout_request(request):
 @login_required
 def profile(request):
     current_user = request.user
-    # user_profile = Profile.objects.all().filter(
-    #     username=current_user.username).first()
-    print(current_user)
-    print(current_user.profile)
+    
     context = {
         "user_details": current_user.profile
     }
@@ -99,62 +97,45 @@ def profile(request):
 
 @login_required
 def profile_edit(request):
-    # current_user = request.user
-    # user_profile = Profile.objects.all().filter(
-    #     user=current_user)
-      
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES)
         if form.is_valid():
-            current_user = User.objects.filter(username=request.user.username)
-            user_profile =Profile.objects.all().filter(username = current_user.first().username)
-            # Students.objects.select_for_update().filter(id=3).update(score = 10)
-            print(user_profile)
-            print(current_user[0].username)
-            
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             bio = form.cleaned_data['bio']
             profilephoto = form.cleaned_data['profilephoto']
-            print (username)
-            user_profile.update(username = username)
-            auth_cred =  request.user
-            auth_cred.username = username
-            auth_cred.save()
-            print(request.user.username)
-            user_profile.email = email 
-            user_profile.bio = bio
-            user_profile.profilephoto = profilephoto
+            print(type(profilephoto))
             
-          
-            print(
-                user_profile
-            )
+            
+            
+            Profile.objects.filter(id=request.user.id).update(bio=bio,profilephoto=profilephoto)
+            
+            User.objects.filter(id=request.user.id).update(
+                email=email, username=username)
             return redirect('profile')
-            
+
     current_user = request.user
     user_profile = Profile.objects.all().filter(
         user=current_user).first()
     form = ProfileEditForm()
-
     context = {
         "user_details": user_profile,
         "form": form
     }
 
-    return render(request, 'profile_edit.html',context=context)
+    return render(request, 'profile_edit.html', context=context)
+
 
 @login_required
-def followers(request,user_id):
+def followers(request, user_id):
     current_user = request.user.id
-    current_user=User.objects.get(id=current_user)
+    current_user = User.objects.get(id=current_user)
     other_user = User.objects.get(id=user_id)
-    followers=Followers.objects.filter(followers=current_user,followed=other_user)
+    followers = Followers.objects.filter(
+        followers=current_user, followed=other_user)
     if followers:
         followers.delete()
     else:
-        new_follower=Followers(followers=current_user,followed=other_user)
+        new_follower = Followers(followers=current_user, followed=other_user)
         new_follower.save()
     return redirect("home")
-
-    

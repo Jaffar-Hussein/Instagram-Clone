@@ -34,7 +34,7 @@ class Profile(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=40, null=False)
     image = CloudinaryField("image")
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="Images")
     pub_date = models.DateTimeField(auto_now_add=True)
     caption = models.CharField(max_length=80, null=False)
 
