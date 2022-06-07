@@ -10,12 +10,13 @@ from django.contrib.auth.models import User
 
 @login_required
 def home(request):
-    posts = Image.objects.all()
-    username = request.user.username
-    users = User.objects.all()
-    return render(request, 'home.html', {"posts": posts, "username": username, "users": users})
+    posts=Image.objects.all()
+    username=request.user.username
+    users= User.objects.all()
+    followed = [i for i in User.objects.all() if Followers.objects.filter(followers = request.user, followed=i)]
+    print(followed)
 
-
+    return render(request, 'home.html',{"posts": posts,"username": username,"users": users,"followed":followed},)
 @login_required
 def explore(request):
     posts = Image.objects.all()
@@ -131,8 +132,8 @@ def followers(request, user_id):
     current_user = request.user.id
     current_user = User.objects.get(id=current_user)
     other_user = User.objects.get(id=user_id)
-    followers = Followers.objects.filter(
-        followers=current_user, followed=other_user)
+    followers=Followers.objects.filter(followers=current_user,followed=other_user)
+
     if followers:
         followers.delete()
     else:
