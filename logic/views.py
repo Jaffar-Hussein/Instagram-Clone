@@ -97,10 +97,24 @@ def profile(request):
 
 @login_required
 def profile_edit(request):
-    form = ProfileEditForm()
     current_user = request.user
     user_profile = Profile.objects.all().filter(
         username=current_user.username).first()
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES)
+        print(1)
+        if form.is_valid():
+            print(2)
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            bio = form.cleaned_data['bio']
+            profile = form.cleaned_data['profile']
+            new_profile = user_profile(username=username, email=email, bio=bio, profile=profile)
+            new_profile.save()
+            print(new_profile.username)
+
+    form = ProfileEditForm()
+    
     context = {
         "user_details": user_profile,
         "form": form

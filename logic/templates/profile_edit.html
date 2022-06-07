@@ -1,14 +1,18 @@
 {% extends 'profile.html' %}
 {% load bootstrap5 %}
 {% block edit_display %}
-<form action="" method="post">
+<form action="" method="post" >
     {%csrf_token%}
 
-    {% bootstrap_form form layout='inline' %}
-    <div class="col-auto">
-        <button class="btn btn-primary form-control my-3" type="submit">Sign up</button>
+    
+    <div class="w-100 d-flex flex-column justify-content-center">
+        {{form }}
+        <input type="submit" class="btn btn-primary w-75 mt-2 " value="Submit">
 
     </div>
+
+
+
     
 
 
