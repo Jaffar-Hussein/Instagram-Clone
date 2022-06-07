@@ -61,11 +61,10 @@ def image_upload(request):
             name = form.cleaned_data['name']
             image = form.cleaned_data['image']
             caption = form.cleaned_data['caption']
-            likes = 0
             profile = Profile.objects.all().filter(username=request.user.username).first()
             print(profile)
             form = Image(name=name, image=image, caption=caption,
-                         likes=likes, profile=profile)
+                          profile=profile)
             form.save()
             print(form)
 
