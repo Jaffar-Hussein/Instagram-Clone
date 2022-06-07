@@ -51,9 +51,9 @@ class ImageForm(forms.ModelForm):
         fields = ('name', 'image', 'caption')
         
 class ProfileEditForm(forms.ModelForm):
-    username = forms.CharField(max_length=40)
+    username = forms.CharField(max_length=50)
     email = forms.EmailField()
-    bio = forms.CharField(max_length=80)
+    bio = forms.CharField(max_length=50,widget=forms.Textarea)
     profilephoto = forms.ImageField()
     
     class Meta:

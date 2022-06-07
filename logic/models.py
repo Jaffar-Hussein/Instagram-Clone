@@ -6,12 +6,9 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField()
-    password = models.CharField(max_length=50)
     profilephoto = CloudinaryField("profilephoto")
     bio = models.TextField()
-    user=models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile', null=True)
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -19,15 +16,15 @@ class Profile(models.Model):
 
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
     @classmethod
     def save_profile(cls, profile):
         cls.save(profile)
 
     @classmethod
-    def update_profile(cls, profile):
-        cls.update(profile=profile)
+    def update_profile(cls, username,email,bio,profilephoto):
+        cls.update(username=username, email=email, bio=bio, profilephoto=profilephoto)
 
     @classmethod
     def delete_profile(cls, profile):
