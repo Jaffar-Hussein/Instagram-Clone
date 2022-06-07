@@ -4,16 +4,17 @@ from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Image, Profile
+from .models import Image, Profile, Followers
 from django.contrib.auth.models import User
+
 
 
 @login_required
 def home(request):
-    posts = Image.objects.all()
-    return render(request, 'home.html', {"posts": posts})
-
-
+    posts=Image.objects.all()
+    username=request.user.username
+    users= User.objects.all()
+    return render(request, 'home.html',{"posts": posts,"username": username,"users": users})
 @login_required
 def explore(request):
     posts = Image.objects.all()
@@ -141,4 +142,19 @@ def profile_edit(request):
         "form": form
     }
 
-    return render(request, 'profile_edit.html', context=context)
+    return render(request, 'profile_edit.html',context=context)
+
+@login_required
+def followers(request,user_id):
+    current_user = request.user.id
+    current_user=User.objects.get(id=current_user)
+    other_user = User.objects.get(id=user_id)
+    followers=Followers.objects.filter(followers=current_user,followed=other_user)
+    if followers:
+        followers.delete()
+    else:
+        new_follower=Followers(followers=current_user,followed=other_user)
+        new_follower.save()
+    return redirect("home")
+
+    
