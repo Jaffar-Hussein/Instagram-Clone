@@ -34,7 +34,7 @@ class Profile(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=40, null=False)
     image = CloudinaryField("image")
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="Images",parent_link=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="Images")
     pub_date = models.DateTimeField(auto_now_add=True)
     caption = models.CharField(max_length=80, null=False)
 
@@ -54,8 +54,8 @@ class Image(models.Model):
         cls.update(caption=caption)
 
 class Followers(models.Model):
-    followers = models.ForeignKey(User, related_name='followers',on_delete=models.CASCADE, default=0)
-    followed=models.ForeignKey(User,related_name='followed',on_delete=models.CASCADE,default=0)
+    followers = models.ForeignKey(User, related_name='followers',on_delete=models.CASCADE)
+    followed=models.ForeignKey(User,related_name='followed',on_delete=models.CASCADE)
 
 
 class Like(models.Model):

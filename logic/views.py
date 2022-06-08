@@ -13,11 +13,26 @@ def home(request):
     posts = Image.objects.all()
     user_display = request.user
     users = User.objects.all()
+    username = request.user.username
+    users = User.objects.all().exclude(id=request.user.id)
+    followers_posts=Image.objects.all()
+
     followed = [i for i in User.objects.all() if Followers.objects.filter(
         followers=request.user, followed=i)]
-    print(followed)
+    if followed:
+        for i in followed:
+            
+                print(i)
+                followers_posts=Image.objects.all().filter(user=i).order_by('pub_date')
+                print(followers_posts)
+            
+                followers_posts=Image.objects.all()
+    else:
+        followers_posts=Image.objects.all().filter(user=request.user).order_by('pub_date')
+
+        
     
-    return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed},)
+    return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed,"followers_posts":followers_posts},)
 
 
 @login_required
@@ -67,11 +82,9 @@ def image_upload(request):
             name = form.cleaned_data['name']
             image = form.cleaned_data['image']
             caption = form.cleaned_data['caption']
-            profile = Profile.objects.all().filter(id=request.user.id).first()
-            profile.save()
-            print(profile)
+            
             form = Image(name=name, image=image, caption=caption,
-                         profile=profile)
+                         user=request.user)
             form.save()
             messages.success(request, "Post created successful")
             return redirect('home')
@@ -137,8 +150,7 @@ def profile_edit(request):
 
 @login_required
 def followers(request, user_id):
-    current_user = request.user.id
-    current_user = User.objects.get(id=current_user)
+    current_user = request.user
     other_user = User.objects.get(id=user_id)
     followers = Followers.objects.filter(
         followers=current_user, followed=other_user)
