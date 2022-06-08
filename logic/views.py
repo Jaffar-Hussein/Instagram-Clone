@@ -6,7 +6,7 @@ from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm,CommentsFo
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Image, Profile, Followers, Like
+from .models import Image, Profile, Followers, Like, Comments
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 
@@ -194,9 +194,21 @@ def search_results(request):
 @login_required
 def comments(request, post_id):
     posts = Image.objects.filter(id=post_id).first()
+    print(posts)
+    all_comments = Comments.objects.filter(image_comment=posts)
+    print(all_comments)
+    if request.method == "POST":
+        form = CommentsForm(request.POST,request.FILES)
+
+        if form.is_valid():
+            comment = form.cleaned_data['comments']
+            form=Comments(comments=comment,image_comment=posts,user=request.user)
+            form.save()
     form = CommentsForm()
+
     context ={
         "posts": posts,
-        "form": form
+        "form": form,
+        "all_comments": all_comments
     }
     return render(request, 'comments.html',context=context)
