@@ -1,9 +1,9 @@
-/* .full-page {
+.full-page {
     width: 100vw !important;
     height: 100vh !important;
     overflow-y: hidden !important;
-    position: fixed !important;
-} */
+    /* position: fixed !important; */
+}
 
 ::-webkit-scrollbar {
     display: none !important;
@@ -134,10 +134,18 @@ body {
     margin-right: 0.8rem;
 }
 .comments-row{
-    max-height: 70vh !important;
+    height: 70vh !important;
     width: 100vw !important;
 }
 
 .navbar-nav{
     flex-direction: row !important;
+}
+.c-img{
+    max-height: 70vh !important;
+}
+.c-height{
+    height: 65vh !important;
+    overflow: hidden !important;
+
 }

@@ -82,6 +82,6 @@ class CommentsForm(forms.ModelForm):
         fields=('comments',)
     
     comments.widget.attrs.update(
-        {'class': 'form-control m-2  input-val', 'placeholder': 'Comments'})
+        {'class': 'form-control m-2  input-val', 'placeholder': 'Type comment here ...'})
 
     
