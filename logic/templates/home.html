@@ -9,7 +9,7 @@
 
      <div class="col-md-5 scroll scroll-h pt-3">
        <div class="d-flex flex-column">
-        {% for post in posts %}
+        {% for post in followers_posts %}
 
         <div class="card my-2" >
             <img class="card-img-top img-fluid img-responsive" src="{{post.image.url}}" alt="Card image cap">
@@ -30,6 +30,8 @@
              </div>
              
           </div>
+          {% empty %}
+          <p>NO posts available</p>
            {% endfor %}
 
         </div>
@@ -73,10 +75,10 @@
     
                    </div>
                    {%if user in followed %}
-                   <a href="{%url 'follow' user_id=user.id%}">Follow</a>
+                   <a href="{%url 'follow' user_id=user.id%}">Unfollow</a>
 
                    {% else %}
-                   <a href="{%url 'follow' user_id=user.id%}">Unfollow</a>
+                   <a href="{%url 'follow' user_id=user.id%}">Follow</a>
 
                    {%endif%}
 
