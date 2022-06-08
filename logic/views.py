@@ -195,8 +195,8 @@ def search_results(request):
 def comments(request, post_id):
     posts = Image.objects.filter(id=post_id).first()
     print(posts)
-    all_comments = Comments.objects.filter(image_comment=posts)
-    print(all_comments)
+    all_comments = Comments.objects.all().filter(image_comment=posts)
+   
     if request.method == "POST":
         form = CommentsForm(request.POST,request.FILES)
 
