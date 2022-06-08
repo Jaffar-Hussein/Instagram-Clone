@@ -107,7 +107,7 @@ def profile(request):
     user_display = request.user
     
     current_user = request.user
-    posts = Image.objects.all().filter(profile__id=request.user.id)
+    posts = Image.objects.all().filter(user=request.user.id)
     number = len(posts)
     context = {
         "user_details": current_user.profile,
