@@ -5,17 +5,19 @@
     position: fixed !important;
 }
 
-.invisible-scrollbar::-webkit-scrollbar {
+::-webkit-scrollbar {
     display: none !important;
 }
-
+::-webkit-scrollbar {
+    display: none !important;
+  }
 html {
     scroll-behavior: smooth;
 }
 
 .scroll {
     overflow-y: scroll !important;
-    height: 85vh !important;
+    height: 87vh !important;
 }
 
 .upload-height {

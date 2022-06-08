@@ -1,45 +1,43 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
 # Create your views here.
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Image, Profile, Followers
+from .models import Image, Profile, Followers,Like
 from django.contrib.auth.models import User
-
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def home(request):
     posts = Image.objects.all()
     user_display = request.user
     users = User.objects.all()
-    username = request.user.username
     users = User.objects.all().exclude(id=request.user.id)
-    followers_posts=Image.objects.all()
-
+    followers_posts = Image.objects.all()
     followed = [i for i in User.objects.all() if Followers.objects.filter(
         followers=request.user, followed=i)]
     if followed:
         for i in followed:
-            
-                print(i)
-                followers_posts=Image.objects.all().filter(user=i).order_by('pub_date')
-                print(followers_posts)
-            
-                followers_posts=Image.objects.all()
-    else:
-        followers_posts=Image.objects.all().filter(user=request.user).order_by('pub_date')
 
-        
-    
-    return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed,"followers_posts":followers_posts},)
+            
+            followers_posts = Image.objects.all().filter(user=i).order_by('pub_date')
+            
+
+            followers_posts = Image.objects.all()
+    else:
+        followers_posts = Image.objects.all().filter(
+            user=request.user).order_by('pub_date')
+
+    return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed, "followers_posts": followers_posts},)
 
 
 @login_required
 def explore(request):
     posts = Image.objects.all()
     user_display = request.user
-    return render(request, 'explore.html', {"posts": posts,"user_display": user_display})
+    return render(request, 'explore.html', {"posts": posts, "user_display": user_display})
 
 
 def register_request(request):
@@ -82,7 +80,7 @@ def image_upload(request):
             name = form.cleaned_data['name']
             image = form.cleaned_data['image']
             caption = form.cleaned_data['caption']
-            
+
             form = Image(name=name, image=image, caption=caption,
                          user=request.user)
             form.save()
@@ -105,7 +103,7 @@ def logout_request(request):
 @login_required
 def profile(request):
     user_display = request.user
-    
+
     current_user = request.user
     posts = Image.objects.all().filter(user=request.user.id)
     number = len(posts)
@@ -121,7 +119,7 @@ def profile(request):
 @login_required
 def profile_edit(request):
     user_display = request.user
-    
+
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES)
         if form.is_valid():
@@ -161,3 +159,18 @@ def followers(request, user_id):
         new_follower = Followers(followers=current_user, followed=other_user)
         new_follower.save()
     return redirect("home")
+
+@csrf_exempt
+@login_required
+def likes(request,post_id):
+    current_user = request.user
+    current_user_like = Like.objects.all().filter(lovers_id = current_user.id,post_id=post_id)
+    if current_user_like.first():
+        current_user_like.delete()
+       
+    else:
+        new=Like(lovers_id = current_user.id,post_id=post_id)
+        new.save()
+    number = str(Like.objects.filter(post_id=post_id).count())
+    
+    return HttpResponse(number)

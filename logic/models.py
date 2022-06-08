@@ -9,7 +9,7 @@ class Profile(models.Model):
     profilephoto = CloudinaryField("profilephoto")
     bio = models.TextField()
     user=models.OneToOneField(User, on_delete=models.CASCADE)
-
+    
 
     def __str__(self):
         return f"Profile: {self.username} : email: {self.email} : profile: {self.profilephoto} : category: {self.bio}"
@@ -59,6 +59,5 @@ class Followers(models.Model):
 
 
 class Like(models.Model):
-    post = models.ForeignKey(Image, related_name='followers',on_delete=models.CASCADE,default=0)
-
-
+    post = models.ForeignKey(Image, related_name='likes',on_delete=models.CASCADE)
+    lovers = models.ForeignKey(User, related_name='posts_liked',on_delete=models.CASCADE)
