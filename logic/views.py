@@ -16,8 +16,7 @@ def home(request):
     followed = [i for i in User.objects.all() if Followers.objects.filter(
         followers=request.user, followed=i)]
     print(followed)
-    us = User.objects.get(id = request.user.id).profile.profilephoto.url
-    print(us)
+    
     return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed},)
 
 
