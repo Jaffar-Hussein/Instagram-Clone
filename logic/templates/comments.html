@@ -12,8 +12,10 @@
         <div class="col-md-4">
             <!-- Comments Display -->
             <div class="container c-height">
+                <p class="fst-italic h4 text-center">Comments</p>
+
                 {% for comment in all_comments %}
-                    <p class="lead p-2"><strong>comment.user.username</strong>comment.comment</p>
+                    <p class="lead p-2">{{comment.comments}} <span class="text-muted mx-3"  >~ {{comment.user.username}}</span></p>
                     
                 {% endfor %}
             </div>
