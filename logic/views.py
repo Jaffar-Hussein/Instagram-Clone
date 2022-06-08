@@ -11,19 +11,21 @@ from django.contrib.auth.models import User
 @login_required
 def home(request):
     posts = Image.objects.all()
-    username = request.user.username
+    user_display = request.user
     users = User.objects.all()
     followed = [i for i in User.objects.all() if Followers.objects.filter(
         followers=request.user, followed=i)]
     print(followed)
-    
-    return render(request, 'home.html', {"posts": posts, "username": username, "users": users, "followed": followed},)
+    us = User.objects.get(id = request.user.id).profile.profilephoto.url
+    print(us)
+    return render(request, 'home.html', {"posts": posts, "user_display": user_display, "users": users, "followed": followed},)
 
 
 @login_required
 def explore(request):
     posts = Image.objects.all()
-    return render(request, 'explore.html', {"posts": posts})
+    user_display = request.user
+    return render(request, 'explore.html', {"posts": posts,"user_display": user_display})
 
 
 def register_request(request):
@@ -59,6 +61,7 @@ def login_request(request):
 
 @login_required
 def image_upload(request):
+    user_display = request.user
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -76,7 +79,8 @@ def image_upload(request):
     form = ImageForm()
 
     context = {
-        "form": form
+        "form": form,
+        "user_display": user_display
     }
     return render(request, 'upload.html', context=context)
 
@@ -88,19 +92,24 @@ def logout_request(request):
 
 @login_required
 def profile(request):
+    user_display = request.user
+    
     current_user = request.user
     posts = Image.objects.all().filter(profile__id=request.user.id)
     number = len(posts)
     context = {
         "user_details": current_user.profile,
         "posts": posts,
-        "number": number
+        "number": number,
+        "user_display": user_display
     }
     return render(request, 'profile.html', context=context)
 
 
 @login_required
 def profile_edit(request):
+    user_display = request.user
+    
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES)
         if form.is_valid():
@@ -121,7 +130,8 @@ def profile_edit(request):
     form = ProfileEditForm()
     context = {
         "user_details": user_profile,
-        "form": form
+        "form": form,
+        "user_display": user_display
     }
     return render(request, 'profile_edit.html', context=context)
 
