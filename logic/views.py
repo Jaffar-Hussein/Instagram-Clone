@@ -119,7 +119,6 @@ def profile(request):
 @login_required
 def profile_edit(request):
     user_display = request.user
-
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES)
         if form.is_valid():
@@ -141,7 +140,8 @@ def profile_edit(request):
     context = {
         "user_details": user_profile,
         "form": form,
-        "user_display": user_display
+        "user_display": user_display,
+        'number': len(Image.objects.all().filter(user=request.user.id))
     }
     return render(request, 'profile_edit.html', context=context)
 
