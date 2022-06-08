@@ -2,7 +2,7 @@ from dataclasses import field
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Image
+from .models import Profile, Image, Comments
 
 
 class NewUserForm(UserCreationForm):
@@ -74,4 +74,14 @@ class ProfileEditForm(forms.ModelForm):
     bio.widget.attrs.update(
         {'class': 'form-control m-2  input-val', 'placeholder': 'Enter bio','rows':4, 'cols':40})
     
+class CommentsForm(forms.ModelForm):
+    comments=forms.CharField(max_length=50)
+
+    class Meta:
+        model=Comments
+        fields=('comments')
+    
+    comments.widget.attrs.update(
+        {'class': 'form-control m-2  input-val', 'placeholder': 'Comments'})
+
     
