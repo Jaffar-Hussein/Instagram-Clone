@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
@@ -5,9 +6,10 @@ from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Image, Profile, Followers,Like
+from .models import Image, Profile, Followers, Like
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required
 def home(request):
@@ -21,9 +23,7 @@ def home(request):
     if followed:
         for i in followed:
 
-            
             followers_posts = Image.objects.all().filter(user=i).order_by('pub_date')
-            
 
             followers_posts = Image.objects.all()
     else:
@@ -160,20 +160,24 @@ def followers(request, user_id):
         new_follower.save()
     return redirect("home")
 
+
 @csrf_exempt
 @login_required
-def likes(request,post_id):
+def likes(request, post_id):
     current_user = request.user
-    current_user_like = Like.objects.all().filter(lovers_id = current_user.id,post_id=post_id)
+    current_user_like = Like.objects.all().filter(
+        lovers_id=current_user.id, post_id=post_id)
     if current_user_like.first():
         current_user_like.delete()
-       
+
     else:
-        new=Like(lovers_id = current_user.id,post_id=post_id)
+        new = Like(lovers_id=current_user.id, post_id=post_id)
         new.save()
     number = str(Like.objects.filter(post_id=post_id).count())
-    
+
     return HttpResponse(number)
+
+
 @login_required
 def search_results(request):
     if 'caption' in request.GET and request.GET['caption']:
@@ -181,9 +185,16 @@ def search_results(request):
         searched_Category = Image.search_images(searched_term)
         message = f"{searched_term}"
         image = Image.objects.all()
-        
-        return render(request, 'search_results.html', {"message": message, 'categories': searched_Category, "image": image,})
+        return render(request, 'search_results.html', {"message": message, 'categories': searched_Category, "image": image, })
     else:
         message = "You haven't searched for any term"
-
         return render(request, 'search_results.html', {"message": message, "image": image})
+
+
+@login_required
+def comments(request, post_id):
+    posts = Image.objects.filter(id=post_id).first()
+    context ={
+        "posts": posts,
+    }
+    return render(request, 'comments.html',context=context)

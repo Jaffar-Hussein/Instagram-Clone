@@ -73,7 +73,7 @@ class ProfileEditForm(forms.ModelForm):
         {'class': 'form-control m-2  input-val', 'placeholder': 'Profile Photo'})
     bio.widget.attrs.update(
         {'class': 'form-control m-2  input-val', 'placeholder': 'Enter bio','rows':4, 'cols':40})
-
+    
 class CommentsForm(forms.ModelForm):
     comments=forms.CharField(max_length=50)
 
