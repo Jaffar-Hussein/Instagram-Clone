@@ -1,9 +1,9 @@
-.full-page {
+/* .full-page {
     width: 100vw !important;
     height: 100vh !important;
     overflow-y: hidden !important;
     position: fixed !important;
-}
+} */
 
 ::-webkit-scrollbar {
     display: none !important;

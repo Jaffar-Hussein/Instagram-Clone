@@ -5,8 +5,8 @@
    <div>
     <a class="navbar-brand insta fs-3" href="{%url "home" %}">HJ Instagram</a>
    </div>
-        <form action="">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form action="{% url 'searchResults' %}" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="caption">
     </form>
     <div class="d-flex justify-content-around align-items-center">
         <ul class="navbar-nav icons-nav">
@@ -60,5 +60,6 @@
     </div>
 </div>
 </div>
+
 
 </nav>
