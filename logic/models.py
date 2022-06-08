@@ -52,6 +52,14 @@ class Image(models.Model):
     @classmethod
     def update_caption(cls, caption):
         cls.update(caption=caption)
+    
+    @classmethod
+    def search_images(cls, caption):
+        """
+        search for an image by category
+        """
+        img = cls.objects.filter(caption__icontains=caption)
+        return img
 
 class Followers(models.Model):
     followers = models.ForeignKey(User, related_name='followers',on_delete=models.CASCADE)

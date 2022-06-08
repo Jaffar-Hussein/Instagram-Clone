@@ -174,3 +174,16 @@ def likes(request,post_id):
     number = str(Like.objects.filter(post_id=post_id).count())
     
     return HttpResponse(number)
+@login_required
+def search_results(request):
+    if 'caption' in request.GET and request.GET['caption']:
+        searched_term = request.GET['caption']
+        searched_Category = Image.search_images(searched_term)
+        message = f"{searched_term}"
+        image = Image.objects.all()
+        
+        return render(request, 'search_results.html', {"message": message, 'categories': searched_Category, "image": image,})
+    else:
+        message = "You haven't searched for any term"
+
+        return render(request, 'search_results.html', {"message": message, "image": image})
