@@ -1,7 +1,7 @@
 from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm
+from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm,CommentsForm
 # Create your views here.
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -194,7 +194,9 @@ def search_results(request):
 @login_required
 def comments(request, post_id):
     posts = Image.objects.filter(id=post_id).first()
+    form = CommentsForm()
     context ={
         "posts": posts,
+        "form": form
     }
     return render(request, 'comments.html',context=context)
