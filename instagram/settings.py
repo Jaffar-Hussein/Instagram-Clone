@@ -14,7 +14,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
-from decouple import config, Csv
+from decouple import config,Csv
 import os
 import dj_database_url
 import django_on_heroku
