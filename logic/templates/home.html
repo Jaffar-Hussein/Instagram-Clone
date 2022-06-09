@@ -12,7 +12,8 @@
                 {% for post in followers_posts %}
 
                 <div class="card my-2">
-                    <img class="card-img-top img-fluid img-responsive" src="{{post.image.url}}" alt="Card image cap">
+                    <a href="{%url 'details' post.id%}"><img class="card-img-top img-fluid img-responsive" src="{{post.image.url}}" alt="Card image cap">
+                    </a>
                     <div class="card-body">
                         <div class="d-flex">
                             <svg hx-post="{%url 'likes' post.id%}" hx-trigger="click"
@@ -36,7 +37,7 @@
                         <!-- <h5 class="card-title my-2">Card title</h5> -->
                         <p class="card-text">
 
-                            <p><b><span class="mr-2">{{post.profile.username}}</span></b> {{post.caption}}</p>
+                            <p><b><span class="">{{post.user.username}}</span class="mx-3"></b> {{post.caption}}</p>
                             <p class="text-muted">{{post.pub_date|naturaltime}}</p>
                         </p>
                     </div>

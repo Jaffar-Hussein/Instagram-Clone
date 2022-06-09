@@ -9,8 +9,9 @@
         <div class="col-md-4 mb-4">
             
             <div class="card" >
-                <img class="card-img-top img-fluid h-75"  src="{{post.image.url}}" alt="Card image cap">
-            </div>
+                <a href="{%url 'details' post.id%}"><img class="card-img-top img-fluid img-responsive" src="{{post.image.url}}" alt="Card image cap">
+                </a>
+        </div>
         </div>
         {% endfor %}
     </div>

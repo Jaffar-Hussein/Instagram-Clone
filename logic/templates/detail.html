@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load bootstrap5 %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+{% include "nav.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" >
+                <img class="card-img-top img-fluid h-75"  src="{{posts.image.url}}" alt="Card image cap">
+            </div>
+        </div>
+        <div class="col-md-4 text-center my-5">
+                <p class="h3">Description </p>
+            <p> Name: <span>{{posts.name}}</span></p>
+            <p>Caption: {{posts.caption}}</p>
+            <p> Username: ~{{posts.user.username}}</p>
+            <p>Published: {{posts.pub_date|naturaltime}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

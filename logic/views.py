@@ -1,3 +1,4 @@
+from cmath import log
 from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -107,10 +108,21 @@ def profile(request):
     current_user = request.user
     posts = Image.objects.all().filter(user=request.user.id)
     number = len(posts)
+    followed = [i for i in User.objects.all() if Followers.objects.filter(
+    followers=request.user, followed=i)]
+
+    followers = [i for i in User.objects.all() if Followers.objects.filter(
+    followers=i, followed=request.user)]
+
+    followed_number = len(followed)
+    followers_number = len(followers)
+    print(followers)
     context = {
         "user_details": current_user.profile,
         "posts": posts,
         "number": number,
+        "followed_number": followed_number,
+        "followers_number": followers_number,
         "user_display": user_display
     }
     return render(request, 'profile.html', context=context)
@@ -180,12 +192,16 @@ def likes(request, post_id):
 
 @login_required
 def search_results(request):
-    if 'caption' in request.GET and request.GET['caption']:
-        searched_term = request.GET['caption']
-        searched_Category = Image.search_images(searched_term)
+    image = User.objects.all()
+
+    if 'username' in request.GET and request.GET['username']:
+        searched_term = request.GET['username']
+        searched_user = Profile.search_user(searched_term)
+        followed = [i for i in User.objects.all() if Followers.objects.filter(
+        followers=request.user, followed=i)]
         message = f"{searched_term}"
-        image = Image.objects.all()
-        return render(request, 'search_results.html', {"message": message, 'categories': searched_Category, "image": image, })
+        image = Profile.objects.all()
+        return render(request, 'search_results.html', {"message": message, 'searched_user': searched_user, 'followed':followed})
     else:
         message = "You haven't searched for any term"
         return render(request, 'search_results.html', {"message": message, "image": image})
@@ -212,3 +228,13 @@ def comments(request, post_id):
         "all_comments": all_comments
     }
     return render(request, 'comments.html',context=context)
+
+@login_required
+def image_detail(request, id):
+    posts = Image.objects.filter(id=id).first()
+
+    context ={
+        "posts": posts,
+        
+    }
+    return render(request, 'detail.html',context=context)

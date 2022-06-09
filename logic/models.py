@@ -29,6 +29,15 @@ class Profile(models.Model):
     @classmethod
     def delete_profile(cls, profile):
         cls.delete(profile)
+    
+    @classmethod
+    def search_user(cls,name):
+        """
+        search for an image by category
+        """
+        img = cls.objects.filter(user__username__icontains=name)
+        return img
+
 
 
 class Image(models.Model):
