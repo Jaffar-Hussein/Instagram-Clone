@@ -15,4 +15,5 @@ urlpatterns = [
     path('likes/<post_id>', views.likes, name='likes'),
     path('search/',views.search_results,name='searchResults'),
     path('comments/<post_id>', views.comments, name='comments'),
+    path('image/<id>', views.image_detail, name='details'),
 ]
