@@ -35,7 +35,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-LOGIN_URL = "login"
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = '/login'
 # Application definition
 
 INSTALLED_APPS = [
