@@ -12,12 +12,13 @@
                 <img class="card-img-top img-fluid h-75"  src="{{posts.image.url}}" alt="Card image cap">
             </div>
         </div>
-        <div class="col-md-4 text-center my-5">
-                <p class="h3">Description </p>
+        <div class="col-md-4 p-5 my-5">
+                <p class="h3 text-center">Description </p>
             <p> Name: <span>{{posts.name}}</span></p>
             <p>Caption: {{posts.caption}}</p>
             <p> Username: {{posts.user.username}}</p>
             <p>Published: {{posts.pub_date|naturaltime}}</p>
+            <p>Likes : {{number}}</p>
         </div>
     </div>
 </div>

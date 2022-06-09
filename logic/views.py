@@ -49,7 +49,7 @@ def register_request(request):
             messages.success(request, "Registration successful, Please Login")
             return redirect("login")
         messages.error(
-            request, "Unsuccessful registration. Invalid information.")
+            request, "Unsuccessful registration.Please ensure you have entered a strong password and valid email")
     form = NewUserForm()
     return render(request, template_name="auth/register.html", context={"register_form": form})
 
@@ -242,9 +242,9 @@ def comments(request, post_id):
 @login_required
 def image_detail(request, id):
     posts = Image.objects.filter(id=id).first()
-
+    number = str(Like.objects.filter(post_id=id).count())
     context ={
         "posts": posts,
-        
+        'number': number
     }
     return render(request, 'detail.html',context=context)
