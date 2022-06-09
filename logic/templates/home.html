@@ -15,7 +15,7 @@
                     <a href="{%url 'details' post.id%}"><img class="card-img-top img-fluid img-responsive" src="{{post.image.url}}" alt="Card image cap">
                     </a>
                     <div class="card-body">
-                        <div class="d-flex">
+                        <div class="d-flex align-items-center">
                             <svg hx-post="{%url 'likes' post.id%}" hx-trigger="click"
                                 hx-target="#likes-display-{{post.id}}" hx-swap="innerHTML" aria-label="Activity Feed"
                                 class="heart" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24"

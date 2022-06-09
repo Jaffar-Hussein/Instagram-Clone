@@ -131,6 +131,14 @@ def profile(request):
 @login_required
 def profile_edit(request):
     user_display = request.user
+    followed = [i for i in User.objects.all() if Followers.objects.filter(
+    followers=request.user, followed=i)]
+
+    followers = [i for i in User.objects.all() if Followers.objects.filter(
+    followers=i, followed=request.user)]
+
+    followed_number = len(followed)
+    followers_number = len(followers)
     if request.method == 'POST':
         form = ProfileEditForm(request.POST, request.FILES)
         if form.is_valid():
@@ -153,7 +161,9 @@ def profile_edit(request):
         "user_details": user_profile,
         "form": form,
         "user_display": user_display,
-        'number': len(Image.objects.all().filter(user=request.user.id))
+        'number': len(Image.objects.all().filter(user=request.user.id)),
+        "followed_number": followed_number,
+        "followers_number": followers_number,
     }
     return render(request, 'profile_edit.html', context=context)
 
