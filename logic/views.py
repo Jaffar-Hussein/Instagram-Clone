@@ -2,7 +2,7 @@ from cmath import log
 from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm,CommentsForm
+from .forms import NewUserForm, LoginForm, ImageForm, ProfileEditForm, CommentsForm
 # Create your views here.
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -109,10 +109,10 @@ def profile(request):
     posts = Image.objects.all().filter(user=request.user.id)
     number = len(posts)
     followed = [i for i in User.objects.all() if Followers.objects.filter(
-    followers=request.user, followed=i)]
+        followers=request.user, followed=i)]
 
     followers = [i for i in User.objects.all() if Followers.objects.filter(
-    followers=i, followed=request.user)]
+        followers=i, followed=request.user)]
 
     followed_number = len(followed)
     followers_number = len(followers)
@@ -132,10 +132,10 @@ def profile(request):
 def profile_edit(request):
     user_display = request.user
     followed = [i for i in User.objects.all() if Followers.objects.filter(
-    followers=request.user, followed=i)]
+        followers=request.user, followed=i)]
 
     followers = [i for i in User.objects.all() if Followers.objects.filter(
-    followers=i, followed=request.user)]
+        followers=i, followed=request.user)]
 
     followed_number = len(followed)
     followers_number = len(followers)
@@ -208,10 +208,10 @@ def search_results(request):
         searched_term = request.GET['username']
         searched_user = Profile.search_user(searched_term)
         followed = [i for i in User.objects.all() if Followers.objects.filter(
-        followers=request.user, followed=i)]
+            followers=request.user, followed=i)]
         message = f"{searched_term}"
         image = Profile.objects.all()
-        return render(request, 'search_results.html', {"message": message, 'searched_user': searched_user, 'followed':followed})
+        return render(request, 'search_results.html', {"message": message, 'searched_user': searched_user, 'followed': followed})
     else:
         message = "You haven't searched for any term"
         return render(request, 'search_results.html', {"message": message, "image": image})
@@ -222,29 +222,36 @@ def comments(request, post_id):
     posts = Image.objects.filter(id=post_id).first()
     print(posts)
     all_comments = Comments.objects.all().filter(image_comment=posts)
-   
+    user_display = request.user
+
     if request.method == "POST":
-        form = CommentsForm(request.POST,request.FILES)
+        form = CommentsForm(request.POST, request.FILES)
 
         if form.is_valid():
             comment = form.cleaned_data['comments']
-            form=Comments(comments=comment,image_comment=posts,user=request.user)
+            form = Comments(comments=comment,
+                            image_comment=posts, user=request.user)
             form.save()
+            return redirect(request.path_info)
     form = CommentsForm()
 
-    context ={
+    context = {
         "posts": posts,
         "form": form,
-        "all_comments": all_comments
+        "all_comments": all_comments,
+        "user_display": user_display
     }
-    return render(request, 'comments.html',context=context)
+    return render(request, 'comments.html', context=context)
+
 
 @login_required
 def image_detail(request, id):
+    user_display = request.user
     posts = Image.objects.filter(id=id).first()
     number = str(Like.objects.filter(post_id=id).count())
-    context ={
+    context = {
         "posts": posts,
-        'number': number
+        'number': number,
+        "user_display": user_display
     }
-    return render(request, 'detail.html',context=context)
+    return render(request, 'detail.html', context=context)
